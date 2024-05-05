@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Converter</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/bg.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding-top: 50px;
+        }
+        #output {
+            margin-top: 50px;
+        }
+        #output img {
+            max-width: 100%;
+            height: auto;
+        }
+        #startButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #startButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Language Converter</h1>
+        <button id="startButton" onclick="startConversion()">
+            <img src="/static/mic.png" alt="Microphone Icon" style="width: 20px; height: 20px; margin-right: 10px;">
+            Start
+        </button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function startConversion() {
+            // Send request to Flask app
+            fetch('/start_conversion')
+            .then(response => response.json())
+            .then(data => {
+                // Display the result in the output div
+                document.getElementById('output').innerHTML = `<img src="${data.result}" alt="Sign Language Image">`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
